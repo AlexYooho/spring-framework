@@ -496,6 +496,7 @@ public class DispatcherServlet extends FrameworkServlet {
 
 	/**
 	 * This implementation calls {@link #initStrategies}.
+	 * <p>在ioc容器bean实例化完成后会发布一个事件来调用此方法
 	 */
 	@Override
 	protected void onRefresh(ApplicationContext context) {
@@ -503,18 +504,35 @@ public class DispatcherServlet extends FrameworkServlet {
 	}
 
 	/**
-	 * Initialize the strategy objects that this servlet uses.
-	 * <p>May be overridden in subclasses in order to initialize further strategy objects.
+	 * 这是是初始化springmvc的九大组件
+	 * <p>可以重写对应的组件然后覆盖使用
 	 */
 	protected void initStrategies(ApplicationContext context) {
+		// 初始化文件上传
 		initMultipartResolver(context);
+
+		// 初始化本地解析器
 		initLocaleResolver(context);
+
+		// 初始化主题解析器
 		initThemeResolver(context);
+
+		// 初始化HandlerMapping
 		initHandlerMappings(context);
+
+		// 初始化Handler适配器
 		initHandlerAdapters(context);
+
+		// 初始化Handler异常处理器
 		initHandlerExceptionResolvers(context);
+
+		// 初始化请求转换
 		initRequestToViewNameTranslator(context);
+
+		// 初始化试图解析器
 		initViewResolvers(context);
+
+		// flash相关属性
 		initFlashMapManager(context);
 	}
 
